@@ -1,18 +1,18 @@
 const express = require("express");
-const cors = require("cors");
-const itemRoutes = require("./routes/itemRoutes");
-require("dotenv").config();
-
 const app = express();
 
-app.use(cors());
-app.use(express.json());
-app.use(express.static("client/src")); //serves files
+//Import the database pool to trigger its connection check
+const pool = require("./config/db");
 
-//Route prefixing
-app.use("/api/items", itemRoutes);
+//Middleware to parse incoming JSON requests
+app.use(express.json());
+
+//A simple health check route to verify the server is responding
+app.get("/api/health", (req, res) => {
+  res.json({ status: "UP", message: "Server is running smoothly" });
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server spinning on http://localhost:${PORT}`);
+  console.log(`🚀 Server listening on port ${PORT}`);
 });

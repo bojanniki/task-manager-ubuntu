@@ -1,14 +1,19 @@
+require("dotenv").config();
 const { Pool } = require("pg");
-require("dotenv").config;
+
+//Instantiate the connection pool using the enviroment variable
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-//Logic check: Log errors if the pool fails
-pool.on("error", (err) => {
-  console.error("Unexpected error on idle client", err);
-  process.exit(-1);
+//Test the database connection upon initialization
+pool.query("SELECT NOW()", (err, res) => {
+  if (err) {
+    console.error("❌ Database connection error:", err.stack);
+  } else {
+    console.log("✅ Connected to the PostgreSQL database pool successfully.");
+  }
 });
 
 module.exports = pool;
