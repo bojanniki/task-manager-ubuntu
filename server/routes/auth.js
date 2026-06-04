@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
@@ -75,9 +76,15 @@ router.post("/login", async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ error: "Invalid username or password." });
     }
-    //4. Success - fow now the user details are returned
+    //4. Success - issue a JWT
+    const token = jwt.sign(
+      { userId: user.id, username: user.username },
+      process.env.JWT_SECRET,
+      { expiresIn: "24 h" },
+    );
     return res.status(200).json({
       message: "Login successful",
+      token: token,
       user: {
         id: user.id,
         username: user.name,

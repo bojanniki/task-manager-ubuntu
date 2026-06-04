@@ -142,6 +142,18 @@ ECONNREFUSED
 - Implemented unified, non-descriptive error signaling (`401 Unauthorized`) for both absent accounts and invalid passwords to defend against user enumeration mapping attacks.
 - Successfully executed end-to-end HTTP integration tests via `curl` to verify accurate credential routing and boundary rejection logic.
 
+### Log Entry: June 4, 2026
+
+**Milestone:** 2.5 — State Persistence, JWT Claims, & Protected CRUD
+**Status:** SUCCESS ✅
+
+#### Technical Implementations:
+
+- Integrated `jsonwebtoken` state handling to eliminate stateless HTTP request limitations.
+- Constructed a reusable custom authorization gateway engine (`server/middleware/authMiddleware.js`) tracking the `Bearer` token extraction pattern.
+- Fabricated complete database tenant isolation across all endpoints in `server/routes/tasks.js` by explicitly scoping queries against `req.user.userId`.
+- Validated security boundary constraints via automated shell requests, proving immediate rejection of truncated signatures and flawless handling of complex nested JSON payloads.
+
 ## Planned Objectives
 
 - Create API route structure
