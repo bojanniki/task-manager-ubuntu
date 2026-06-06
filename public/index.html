@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager - Auth</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="auth-container">
+      <div id="login-card" class="auth-card">
+        <h2>Welcome Back</h2>
+        <p class="subtitle">Log in to manage your tasks</p>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="login-username">Username</label>
+            <input
+              type="text"
+              id="login-username"
+              required
+              autocomplete="username"
+            />
+          </div>
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <input
+              type="password"
+              id="login-password"
+              required
+              autocomplete="current-password"
+            />
+          </div>
+          <button type="submit" class="btn">Log in</button>
+        </form>
+        <p class="switch-text">
+          Don't have an account <a href="#" id="to-register"> Register Here</a>
+        </p>
+        <div id="login-message" class="message"></div>
+      </div>
+      <div id="register-card" class="auth-card hidden">
+        <h2>Create Account</h2>
+        <p class="subtitle">Register to start tracking you tasks</p>
+        <form id="register-form">
+          <div class="form-group">
+            <label for="register-username">Username</label>
+            <input
+              type="text"
+              id="register-username"
+              required
+              autocomplete="username"
+            />
+          </div>
+          <div class="form-group">
+            <label for="register-password">Password</label>
+            <input
+              type="password"
+              id="register-password"
+              required
+              autocomplete="new-password"
+            />
+          </div>
+          <button type="submit" class="btn">Register</button>
+        </form>
+        <p class="switch-text">
+          Already have account? <a href="#" id="to-login">Log in here</a>
+        </p>
+        <div id="register-message" class="message"></div>
+      </div>
+    </div>
+    <script src="/js/auth.js"></script>
+  </body>
+</html>

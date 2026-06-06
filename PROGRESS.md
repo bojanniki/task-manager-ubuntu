@@ -1,126 +1,194 @@
-# Project Progress Log
+# Task Manager App — Project Progress Log
 
-## Project Information
-
-**Project:** Task Manager App
 **Purpose:** Learn full-stack web development while building a production-style application from scratch.
-**Stack:** HTML, CSS, JavaScript, Node.js, Express, PostgreSQL
-**Development Environment:** Windows + WSL2 (Ubuntu) + VS Code
+**Stack:** HTML · CSS · JavaScript · Node.js · Express · PostgreSQL
+**Dev Environment:** Windows + WSL2 (Ubuntu) + VS Code
 **Deployment Target:** Ubuntu Server
 **Version Control:** Git & GitHub
 
 ---
 
-# Milestone 1 — Project Foundation ✅
+## 📊 Milestone Overview
 
-**Status:** Complete
-
-## Objectives Achieved
-
-- Initialized Git repository
-- Created project structure
-- Configured `.gitignore`
-- Set up local PostgreSQL database (`task_manager_db`)
-- Created relational database schema
-- Established GitHub repository and push workflow
-
-## Database Schema
-
-### Users Table
-
-- `id` (Primary Key)
-- `username` (Unique)
-- `password_hash`
-- `created_at`
-
-### Tasks Table
-
-- `id` (Primary Key)
-- `user_id` (Foreign Key)
-- `title`
-- `description`
-- `is_completed`
-- `created_at`
-
-## Lessons Learned
-
-- Git basics and repository management
-- Importance of environment variables
-- Relational database design fundamentals
-- PostgreSQL table creation and relationships
+| #   | Milestone                                   | Status         |
+| --- | ------------------------------------------- | -------------- |
+| 1   | Project Foundation                          | ✅ Complete    |
+| 2   | Backend Infrastructure, Security & REST API | ✅ Complete    |
+| 3   | Frontend UI Development                     | 🔄 In Progress |
+| 4   | Server Hardening & Observability            | 🔲 Pending     |
+| 5   | Ubuntu Server Deployment                    | 🔲 Pending     |
 
 ---
 
-# Milestone 2 — Backend Infrastructure, Security & REST API ✅
+## ✅ Milestone 1 — Project Foundation
 
 **Status:** Complete
 
-## Log Entries & Technical Implementations
+### Objectives Achieved
+
+- [x] Initialized Git repository and established GitHub push workflow
+- [x] Created project directory structure
+- [x] Configured `.gitignore` and `.env.example`
+- [x] Set up local PostgreSQL database (`task_manager_db`)
+- [x] Designed and executed relational database schema
+
+### Database Schema
+
+**`users`**
+| Column | Type | Constraint |
+|--------|------|------------|
+| `id` | SERIAL | Primary Key |
+| `username` | VARCHAR(50) | Unique, Not Null |
+| `password_hash` | VARCHAR(255) | Not Null |
+| `created_at` | TIMESTAMP | Default Now |
+
+**`tasks`**
+| Column | Type | Constraint |
+|--------|------|------------|
+| `id` | SERIAL | Primary Key |
+| `user_id` | INTEGER | FK → users(id) ON DELETE CASCADE |
+| `title` | VARCHAR(100) | Not Null |
+| `description` | TEXT | — |
+| `is_completed` | BOOLEAN | Default FALSE |
+| `created_at` | TIMESTAMP | Default Now |
+
+### Lessons Learned
+
+- Git basics and repository management
+- Importance of environment variables and secrets management
+- Relational database design fundamentals
+- PostgreSQL table creation and foreign key relationships
+
+---
+
+## ✅ Milestone 2 — Backend Infrastructure, Security & REST API
+
+**Status:** Complete
 
 ### Log Entry: May 31, 2026 — Express & Connection Pooling
 
-- **Express Backend Initialization:** Configured `server/app.js`, initialized the Express application, and verified the server runtime listening on port `5000`.
-- **PostgreSQL Connection Pool:** Structured `server/config/db.js` using `pg.Pool` to efficiently handle relational database transactions.
-- **WSL2 Networking Resolution:** Isolated a cross-environment `ECONNREFUSED` connection failure. Resolved by determining the virtual network host gateway IP and configuring PostgreSQL's `pg_hba.conf` rule parameters to permit external loopback subnets.
+- **Express Backend:** Configured `server/app.js`, initialized the Express application on port `5000`.
+- **PostgreSQL Pool:** Structured `server/config/db.js` using `pg.Pool` for concurrent connection handling.
+- **WSL2 Networking Fix:** Resolved `ECONNREFUSED` by identifying the WSL2 gateway IP and updating `pg_hba.conf` to permit cross-environment connections from the Windows host.
 
-### Log Entry: June 2, 2026 — Cryptographic Registrations
+---
 
-- **Dependency Integration:** Installed and natively compiled `bcrypt` binaries inside the Linux runtime.
-- **Registration Routing:** Fabricated an asynchronous `POST /api/auth/register` endpoint inside `server/routes/auth.js`.
-- **SQL Injection Prevention:** Implemented strict parameterized query inputs (`$1, $2`) protecting database writes.
-- **Structural Validations:** Configured account existence verification, input sanitization, and automated salt-hashing routines before records hit the database.
+### Log Entry: June 2, 2026 — Cryptographic Registration
+
+- **Dependencies:** Installed and natively compiled `bcrypt` binaries inside the Linux runtime.
+- **Register Endpoint:** Built `POST /api/auth/register` inside `server/routes/auth.js`.
+- **SQL Injection Prevention:** Enforced parameterized query inputs (`$1`, `$2`) on all database writes.
+- **Input Hardening:** Account existence checks, input sanitization, and automated salt-hashing before any record reaches the database.
+
+---
 
 ### Log Entry: June 2, 2026 — Network Hardening & Timeouts
 
-- **Silent Hang Diagnosis:** Re-engineered the database pool analyzer with an IIFE wrapping an explicit 5000ms `connectionTimeoutMillis` threshold, breaking silent network drops.
-- **Firewall Gate Routing:** Isolated a packet-dropping issue originating from the Windows Advanced Security Firewall layer. Rectified by constructing a custom Inbound Rule exception for TCP Port 5432, enabling smooth WSL-to-Host communication.
-
-### Log Entry: June 2, 2026 — Cryptographic Challenge Login
-
-- **Authentication Pipeline:** Engineered a robust `POST /api/auth/login` endpoint.
-- **Safe Hash Verification:** Utilized decoupled `bcrypt.compare` procedures to mathematically authenticate plain text submissions against stored hashes without raw value leaks.
-- **Enumeration Defense:** Formulated generic, non-descriptive error paths (`401 Unauthorized`) for both missing usernames and incorrect secrets to neutralize profile harvesting.
-
-### Log Entry: June 4, 2026 — JWT State Enforcement & Task CRUD
-
-- **Stateless Session Engine:** Integrated the `jsonwebtoken` package to sign, deliver, and decode cryptographically sealed tokens containing user claims, avoiding local server memory allocation.
-- **Interception Middleware:** Deployed a reusable `authMiddleware.js` layer checking the incoming HTTP `Authorization: Bearer <token>` layout to block unauthorized requests.
-- **Multi-Tenant Isolation Scoping:** Completed a full REST task suite (`POST`, `GET`, `PUT`, `DELETE`) inside `server/routes/tasks.js`, forcing every query constraint to evaluate against `req.user.userId`.
-
-## Lessons Learned
-
-- WSL2-to-Windows firewall loopback traversal architecture.
-- Computational advantages and composition mechanics of bcrypt key-stretching salts.
-- Composition of JSON Web Tokens (Header, Payload, Signature) and tamper detection properties.
-- Database tenant isolation techniques in relational database models.
+- **Silent Hang Fix:** Re-engineered the pool config with an explicit `connectionTimeoutMillis: 5000` threshold to break silent network drops.
+- **Windows Firewall Rule:** Diagnosed packet-dropping at the Windows Advanced Security Firewall layer. Created a custom Inbound Rule for TCP Port 5432, enabling stable WSL-to-Host traffic.
 
 ---
 
-# Future Milestones
+### Log Entry: June 2, 2026 — Login & Enumeration Defense
 
-## Milestone 3 — Frontend UI Development
-
-- Design static mockups for Auth and Dashboard components.
-- Establish clean, vanilla DOM-manipulation structures.
-- Coordinate client-side session management (storing and processing JWT tokens via `localStorage` or session wrappers).
-- Create dynamic Task dashboard feeding directly from the CRUD REST endpoints.
-- Build form entry and UI-side status validations.
-
-## Milestone 4 — Server Hardening & Observability
-
-- Configure global error handling middleware inside Express.
-- Setup environment-aware structured loggers (such as Winston or Morgan).
-- Evaluate refresh token configurations for robust session management.
-
-## Milestone 5 — Ubuntu Server Deployment
-
-- Provision a clean production Ubuntu Server instance.
-- Deploy runtime prerequisites (Node.js, PostgreSQL environment configs).
-- Setup Reverse Proxy structures (Nginx) alongside Process Managers (PM2) to ensure high-availability server up-time.
-- Execute live production pipeline migration and testing checks.
+- **Login Endpoint:** Engineered `POST /api/auth/login` with full authentication pipeline.
+- **Hash Verification:** Used `bcrypt.compare` to validate plaintext submissions against stored hashes without exposing raw values.
+- **Enumeration Defense:** Generic `401 Unauthorized` responses for both missing usernames and incorrect passwords — no detail leaked to prevent user harvesting.
 
 ---
 
-# Notes
+### Log Entry: June 4, 2026 — JWT Middleware & Task CRUD
 
-This document tracks major milestones, technical challenges, architectural decisions, and lessons learned throughout the development of the Task Manager App.
+- **Stateless Sessions:** Integrated `jsonwebtoken` to sign and decode sealed tokens containing user claims — no server-side session memory required.
+- **Auth Middleware:** Deployed `authMiddleware.js` to intercept and validate `Authorization: Bearer <token>` headers on all protected routes.
+- **Task CRUD Suite:** Completed full REST task endpoints (`POST`, `GET`, `PUT`, `DELETE`) in `server/routes/tasks.js`, with every query scoped to `req.user.userId` for multi-tenant isolation.
+
+### Lessons Learned
+
+- WSL2-to-Windows firewall loopback traversal and network debugging
+- bcrypt key-stretching, salt composition, and computational hardening
+- JWT structure (Header · Payload · Signature) and tamper detection
+- Multi-tenant query isolation in relational databases
+
+---
+
+## 🔄 Milestone 3 — Frontend UI Development
+
+**Status:** In Progress
+
+### Log Entry: June 6, 2026 — Frontend UI Implementation & Infrastructure
+
+- **UI Mockup Implementation:** Developed complete static frontend mockups for the Authentication flow (Login/Register), establishing the visual foundation for the application.
+- **Routing Engine Overhaul:** Migrated from deprecated `*` string wildcards to native JavaScript Regex (`/^(?!\/api).*$/`) for SPA routing to comply with `path-to-regexp` v8 strictness.
+- **Static Asset Path Alignment:** Synchronized `express.static` middleware root configuration with client-side HTML `<script>` and `<link>` requests, resolving 404 resource errors.
+- **Frontend State Management:** Debugged UI toggling logic by correcting CSS syntax errors (`border-radius`), removing conflicting `hidden` HTML attributes, and refining class-toggling scripts to enforce a single source of truth for component visibility.
+
+### Remaining Tasks
+
+- [ ] Wire Login/Register forms to `POST /api/auth/login` and `POST /api/auth/register`
+- [ ] Store JWT token in `localStorage` and attach to authenticated requests
+- [ ] Build dynamic Task dashboard fed from CRUD REST endpoints
+- [ ] Client-side form validation and user-facing error/status feedback
+- [ ] Handle logout (clear token, redirect to auth screen)
+
+---
+
+## 🔲 Milestone 4 — Server Hardening & Observability
+
+**Status:** Pending
+
+### Planned Tasks
+
+- [ ] Configure global error-handling middleware in Express
+- [ ] Set up environment-aware structured logging (Winston or Morgan)
+- [ ] Evaluate refresh token architecture for robust session management
+
+---
+
+## 🔲 Milestone 5 — Ubuntu Server Deployment
+
+**Status:** Pending
+
+### Planned Tasks
+
+- [ ] Provision clean production Ubuntu Server instance
+- [ ] Install runtime prerequisites (Node.js, PostgreSQL)
+- [ ] Configure Nginx as reverse proxy + PM2 as process manager
+- [ ] Execute live production pipeline migration and smoke tests
+- [ ] Verify Git deployment pipeline: `git push` (Windows) → `git pull` (Ubuntu)
+
+---
+
+## 📁 Project Structure
+
+```
+task-manager-ubuntu/
+├── node_modules/
+├── public/
+│   ├── css/
+│   │   └── style.css            ✅
+│   └── js/
+│       ├── auth.js              🔄
+│       └── index.html           ✅
+├── server/
+│   ├── config/
+│   │   └── db.js                ✅
+│   ├── middleware/
+│   │   └── authMiddleware.js    ✅
+│   ├── routes/
+│   │   ├── auth.js              ✅
+│   │   └── tasks.js             ✅
+│   └── app.js                   ✅
+├── .env                         (untracked)
+├── .env.example
+├── .gitignore
+├── database.sql
+├── package-lock.json
+├── package.json
+├── PROGRESS.md
+└── README.md
+```
+
+---
+
+_Last updated: June 6, 2026 — Milestone 3 in progress. Auth UI mockups complete, API wiring next._
