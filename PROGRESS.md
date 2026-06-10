@@ -123,6 +123,28 @@
 - **Static Asset Path Alignment:** Synchronized `express.static` middleware root configuration with client-side HTML `<script>` and `<link>` requests, resolving 404 resource errors.
 - **Frontend State Management:** Debugged UI toggling logic by correcting CSS syntax errors (`border-radius`), removing conflicting `hidden` HTML attributes, and refining class-toggling scripts to enforce a single source of truth for component visibility.
 
+## Log Entry: June 10, 2026 — Auth Flow & Security Validation
+
+### Progress Update
+
+- **Form Integration:** Successfully connected the Registration and Login forms to backend API endpoints using the `fetch` API.
+
+- **Client-Side Authentication:** Implemented asynchronous `async/await` request handlers to process server responses and manage UI state transitions.
+
+- **Security Validation:** Conducted successful "Guard Tests" using `curl` to verify that `authMiddleware` correctly intercepts unauthenticated requests with `401 Unauthorized` responses.
+
+- **JWT Handling:** Established the client-side authentication lifecycle, confirming receipt and valid payload delivery of JSON Web Tokens.
+
+---
+
+### Lessons Learned
+
+- **Asynchronous Patterns:** The critical importance of the `async` keyword when using `await` in `fetch` operations to prevent syntax errors.
+
+- **Request Lifecycle:** `fetch` requests do not automatically treat non-200 status codes as errors; explicit checks of `response.ok` are required.
+
+- **Security Verification:** Manual verification via CLI tools (such as `curl`) is an essential step in confirming that middleware security boundaries are functioning correctly.
+
 ### Remaining Tasks
 
 - [ ] Wire Login/Register forms to `POST /api/auth/login` and `POST /api/auth/register`
