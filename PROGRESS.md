@@ -123,31 +123,24 @@
 - **Static Asset Path Alignment:** Synchronized `express.static` middleware root configuration with client-side HTML `<script>` and `<link>` requests, resolving 404 resource errors.
 - **Frontend State Management:** Debugged UI toggling logic by correcting CSS syntax errors (`border-radius`), removing conflicting `hidden` HTML attributes, and refining class-toggling scripts to enforce a single source of truth for component visibility.
 
-## Log Entry: June 10, 2026 — Auth Flow & Security Validation
+---
 
-### Progress Update
+### Log Entry: June 10, 2026 — Auth Flow & Security Validation
 
 - **Form Integration:** Successfully connected the Registration and Login forms to backend API endpoints using the `fetch` API.
-
-- **Client-Side Authentication:** Implemented asynchronous `async/await` request handlers to process server responses and manage UI state transitions.
-
-- **Security Validation:** Conducted successful "Guard Tests" using `curl` to verify that `authMiddleware` correctly intercepts unauthenticated requests with `401 Unauthorized` responses.
-
-- **JWT Handling:** Established the client-side authentication lifecycle, confirming receipt and valid payload delivery of JSON Web Tokens.
-
----
+- **Client-Side Authentication:** Implemented `async/await` request handlers to process server responses and manage UI state transitions.
+- **Security Validation:** Conducted `curl` guard tests confirming `authMiddleware` correctly blocks unauthenticated requests with `401 Unauthorized`.
+- **JWT Handling:** Established the client-side authentication lifecycle — confirmed receipt and valid payload delivery of JSON Web Tokens.
 
 ### Lessons Learned
 
-- **Asynchronous Patterns:** The critical importance of the `async` keyword when using `await` in `fetch` operations to prevent syntax errors.
-
-- **Request Lifecycle:** `fetch` requests do not automatically treat non-200 status codes as errors; explicit checks of `response.ok` are required.
-
-- **Security Verification:** Manual verification via CLI tools (such as `curl`) is an essential step in confirming that middleware security boundaries are functioning correctly.
+- `async` keyword is required when using `await` in `fetch` operations — omitting it causes a syntax error
+- `fetch` does not treat non-2xx responses as errors; `response.ok` must be checked explicitly
+- CLI tools like `curl` are essential for manually verifying middleware security boundaries
 
 ### Remaining Tasks
 
-- [ ] Wire Login/Register forms to `POST /api/auth/login` and `POST /api/auth/register`
+- [x] Wire Login/Register forms to `POST /api/auth/login` and `POST /api/auth/register`
 - [ ] Store JWT token in `localStorage` and attach to authenticated requests
 - [ ] Build dynamic Task dashboard fed from CRUD REST endpoints
 - [ ] Client-side form validation and user-facing error/status feedback
@@ -190,7 +183,7 @@ task-manager-ubuntu/
 │   ├── css/
 │   │   └── style.css            ✅
 │   └── js/
-│       ├── auth.js              🔄
+│       ├── auth.js              ✅
 │       └── index.html           ✅
 ├── server/
 │   ├── config/
@@ -213,4 +206,4 @@ task-manager-ubuntu/
 
 ---
 
-_Last updated: June 6, 2026 — Milestone 3 in progress. Auth UI mockups complete, API wiring next._
+_Last updated: June 10, 2026 — Auth flow complete and verified. Next: Task dashboard HTML._
