@@ -138,6 +138,20 @@
 - `fetch` does not treat non-2xx responses as errors; `response.ok` must be checked explicitly
 - CLI tools like `curl` are essential for manually verifying middleware security boundaries
 
+Log Entry: June 13, 2026 — Dashboard Infrastructure & Auth Persistence
+
+    Auth Persistence: Implemented localStorage token management to bridge the gap between Login and Dashboard sessions.
+
+    Access Control: Designed the dashboard.html shell and implemented an authentication "Guard" in dashboard.js that triggers an immediate redirect to the landing page if no valid JWT is present.
+
+    Authorization Pattern: Established the standard Bearer <token> request header pattern for all future authenticated REST API calls.
+
+Lessons Learned
+
+    Stateless Session Management: The importance of clearing client-side tokens (localStorage.removeItem) during logouts to prevent unauthorized access to stale sessions.
+
+    Redirect Strategies: Implementing guard logic on page-load is the first line of defense for front-end route protection.
+
 ### Remaining Tasks
 
 - [x] Wire Login/Register forms to `POST /api/auth/login` and `POST /api/auth/register`

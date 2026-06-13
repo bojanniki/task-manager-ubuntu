@@ -116,9 +116,10 @@ document.addEventListener("DOMContentLoaded", () => {
         loginForm.reset();
 
         //saving the token to localStorage
-        console.log("JWT Token Received", data.token);
-        //localStorage.setItem("token", data.token);
-        //TODO: Redirect user to the dashboard workspace view
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          window.location.href = "/dashboard.html";
+        }
       } catch (error) {
         showStatus(loginMessage, error.message, "error");
       }
