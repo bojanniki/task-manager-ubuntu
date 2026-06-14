@@ -9,7 +9,10 @@ const pool = require("./config/db");
 
 //Import the auth routes
 const authRoutes = require("./routes/auth");
-const taskRoutes = require("./routes/tasks"); //1. Import the task routes
+const taskRoutes = require("./routes/tasks"); 
+
+//Import the error handler
+const errorHandler = require("./middleware/errorHandler");
 
 //Middleware to parse incoming JSON requests
 app.use(express.json());
@@ -35,6 +38,9 @@ app.get(/^(?!\/api).*$/, (req, res) => {
   }
   res.sendFile(path.join(__dirname, "..", "public", "index.html"));
 });
+
+app.use(errorHandler);
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server listening on port ${PORT}`);

@@ -170,10 +170,14 @@
 ---
 
 ## 🔲 Milestone 4 — Server Hardening & Observability
-**Status:** Pending
+
+### Log Entry: June 14, 2026 — Centralized Global Error Handling
+- **Resilient Architecture:** Implemented an Express global error-handling middleware (`errorHandler.js`) catching all unhandled route errors via `next(err)`.
+- **Environment Isolation:** Configured the error handler to dynamically check `process.env.NODE_ENV`, keeping detailed stack traces hidden in production while keeping them visible during local development.
+- **Payload Safety:** Ensured database schema errors (such as missing relations) fail gracefully with a safe JSON payload and a 500 status code, protecting internal backend implementation details.
 
 ### Planned Tasks
-- [ ] Configure global error-handling middleware in Express
+- [X] Configure global error-handling middleware in Express
 - [ ] Set up environment-aware structured logging (Winston or Morgan)
 - [ ] Evaluate refresh token architecture for robust session management
 
@@ -190,6 +194,18 @@
 - [ ] Verify Git deployment pipeline: `git push` (Windows) → `git pull` (Ubuntu)
 
 ---
+
+## 🏗️ Architecture Overview
+
+```text
+Browser (HTML/CSS/JS)
+        ↓
+     Express API
+        ↓
+ JWT Authentication Middleware
+        ↓
+     PostgreSQL Database
+```
 
 ## 📁 Project Structure
 
@@ -222,6 +238,39 @@ task-manager-ubuntu/
 ├── PROGRESS.md
 └── README.md
 ```
+## 🚀 Current Features
+
+- User registration with bcrypt password hashing
+- User login with JWT authentication
+- Protected dashboard with client-side auth guards
+- Persistent sessions via localStorage
+- Create new tasks
+- View all tasks
+- Toggle task completion status
+- Delete tasks
+- Real-time UI updates after CRUD operations
+- Logout and session cleanup
+
+---
+
+## 🔌 API Endpoints
+
+### Authentication
+
+| Method | Endpoint | Description |
+|--------|-----------|-------------|
+| POST | `/api/auth/register` | Register a new user |
+| POST | `/api/auth/login` | Authenticate user and return JWT |
+
+### Tasks
+
+| Method | Endpoint | Description |
+|--------|-----------|-------------|
+| GET | `/api/tasks` | Retrieve all tasks for authenticated user |
+| POST | `/api/tasks` | Create a new task |
+| PUT | `/api/tasks/:id` | Toggle task completion |
+| DELETE | `/api/tasks/:id` | Delete a task |
+---
 
 ---
 

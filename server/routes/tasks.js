@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
 
 //2.Read all tasks for the logged-in user
 //@route GET /api/tasks
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
     const userTasks = await pool.query(
       "SELECT * FROM tasks WHERE user_id = $1 ORDER BY created_at DESC",
@@ -35,8 +35,7 @@ router.get("/", async (req, res) => {
     );
     res.json(userTasks.rows);
   } catch (err) {
-    console.error("❌ Get Tasks Error:", err.message);
-    res.status(500).json({ error: "Server error while fetching tasks" });
+    next(err);
   }
 });
 
