@@ -17,7 +17,9 @@ const morgan = require("morgan");
 
 //HTTP request logger, dev format for clean, color coded terminal
 
-app.use(morgan("dev"));
+//Determine the logging format based on the enviroment
+const logFormat = process.env.NODE_ENV === "production" ? "combined" : "dev";
+app.use(morgan(logFormat));
 
 //Middleware to parse incoming JSON requests
 app.use(express.json());

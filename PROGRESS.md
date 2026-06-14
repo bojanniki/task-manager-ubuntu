@@ -180,9 +180,14 @@
 - **Traffic Visibility:** Implemented `morgan` middleware using the `dev` pre-set format to log all incoming HTTP requests automatically.
 - **Diagnostics:** Enabled live performance and status tracking, exposing request methods, endpoints, response statuses, and precise latency metrics directly in the server stdout stream.
 
+### Log Entry: June 14, 2026 — Environment-Aware Configurations
+- **State Switching:** Integrated `process.env.NODE_ENV` logic across the server stack.
+- **Dynamic Logging:** Configured Morgan to automatically use standard Apache `combined` format streams when in production for robust tracking, while keeping `dev` coloring for local work.
+- **Execution Scripting:** Configured `npm run dev` and `npm start` aliases inside `package.json` to automate environment state handoffs cleanly.
+
 ### Planned Tasks
 - [X] Configure global error-handling middleware in Express
-- [ ] Set up environment-aware structured logging (Winston or Morgan)
+- [X] Set up environment-aware structured logging (Winston or Morgan)
 - [ ] Evaluate refresh token architecture for robust session management
 
 ---
