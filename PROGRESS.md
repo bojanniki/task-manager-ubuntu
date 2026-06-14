@@ -150,6 +150,9 @@
 - **Full CRUD Lifecycle:** Successfully integrated `PUT` (toggle completion) and `DELETE` (remove task) endpoints into the dashboard.
 - **Global Scope Handling:** Resolved DOM scope issues by attaching handler functions to the `window` object, ensuring inline HTML button `onclick` attributes can reach JavaScript logic.
 - **Dynamic UI Rendering:** Implemented template literal fetch URLs (e.g. `` `/api/tasks/${id}` ``) for dynamic ID targeting on database mutations.
+- **Design System:** Overhauled style.css using modern CSS variables (:root), Flexbox layouts, and clean typography.
+- **Component Styling:** Upgraded authentication cards and task list items with soft shadows, hover states, and semantic color coding (success/danger buttons).
+- **DOM Restructuring:** Refactored dashboard.js HTML generation to utilize Flexbox (justify-content: space-between) for clean horizontal alignment of task titles and action buttons.
 
 ### Milestone 3 Summary
 - **Authentication:** Fully secured with JWT, `authMiddleware`, and client-side page guards.

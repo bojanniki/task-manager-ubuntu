@@ -73,12 +73,14 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderTasks(tasks) {
         const list = document.getElementById("task-list");
         list.innerHTML = tasks.map((t) => `
-            <li style="${t.is_completed ? 'text-decoration: line-through;' : ''}">
-                ${t.title}
-                <button onclick="toggleTask(${t.id}, ${t.is_completed})">
-                    ${t.is_completed ? 'Undo' : 'Done'}
-                </button>
-                <button onclick="deleteTask(${t.id})">Delete</button>
+            <li class="${t.is_completed ? 'completed' : ''}">
+                <span>${t.title}</span>
+                <div class="task-actions">
+                    <button class="btn-toggle" onclick="toggleTask(${t.id}, ${t.is_completed})">
+                        ${t.is_completed ? 'Undo' : 'Done'}
+                    </button>
+                    <button class="btn-delete" onclick="deleteTask(${t.id})">Delete</button>
+                </div>
             </li>
         `).join("");
     }
