@@ -10,22 +10,20 @@
 
 ## 📊 Milestone Overview
 
-| #   | Milestone                                   | Status         |
-| --- | ------------------------------------------- | -------------- |
-| 1   | Project Foundation                          | ✅ Complete    |
-| 2   | Backend Infrastructure, Security & REST API | ✅ Complete    |
-| 3   | Frontend UI Development                     | 🔄 In Progress |
-| 4   | Server Hardening & Observability            | 🔲 Pending     |
-| 5   | Ubuntu Server Deployment                    | 🔲 Pending     |
+| # | Milestone | Status |
+|---|-----------|--------|
+| 1 | Project Foundation | ✅ Complete |
+| 2 | Backend Infrastructure, Security & REST API | ✅ Complete |
+| 3 | Frontend UI Development | ✅ Complete |
+| 4 | Server Hardening & Observability | 🔲 Pending |
+| 5 | Ubuntu Server Deployment | 🔲 Pending |
 
 ---
 
 ## ✅ Milestone 1 — Project Foundation
-
 **Status:** Complete
 
 ### Objectives Achieved
-
 - [x] Initialized Git repository and established GitHub push workflow
 - [x] Created project directory structure
 - [x] Configured `.gitignore` and `.env.example`
@@ -53,7 +51,6 @@
 | `created_at` | TIMESTAMP | Default Now |
 
 ### Lessons Learned
-
 - Git basics and repository management
 - Importance of environment variables and secrets management
 - Relational database design fundamentals
@@ -62,7 +59,6 @@
 ---
 
 ## ✅ Milestone 2 — Backend Infrastructure, Security & REST API
-
 **Status:** Complete
 
 ### Log Entry: May 31, 2026 — Express & Connection Pooling
@@ -104,7 +100,6 @@
 - **Task CRUD Suite:** Completed full REST task endpoints (`POST`, `GET`, `PUT`, `DELETE`) in `server/routes/tasks.js`, with every query scoped to `req.user.userId` for multi-tenant isolation.
 
 ### Lessons Learned
-
 - WSL2-to-Windows firewall loopback traversal and network debugging
 - bcrypt key-stretching, salt composition, and computational hardening
 - JWT structure (Header · Payload · Signature) and tamper detection
@@ -112,9 +107,8 @@
 
 ---
 
-## 🔄 Milestone 3 — Frontend UI Development
-
-**Status:** In Progress
+## ✅ Milestone 3 — Frontend UI Development
+**Status:** Complete
 
 ### Log Entry: June 6, 2026 — Frontend UI Implementation & Infrastructure
 
@@ -133,41 +127,49 @@
 - **JWT Handling:** Established the client-side authentication lifecycle — confirmed receipt and valid payload delivery of JSON Web Tokens.
 
 ### Lessons Learned
-
 - `async` keyword is required when using `await` in `fetch` operations — omitting it causes a syntax error
 - `fetch` does not treat non-2xx responses as errors; `response.ok` must be checked explicitly
 - CLI tools like `curl` are essential for manually verifying middleware security boundaries
 
-Log Entry: June 13, 2026 — Dashboard Infrastructure & Auth Persistence
+---
 
-    Auth Persistence: Implemented localStorage token management to bridge the gap between Login and Dashboard sessions.
+### Log Entry: June 13, 2026 — Dashboard Infrastructure & Auth Persistence
 
-    Access Control: Designed the dashboard.html shell and implemented an authentication "Guard" in dashboard.js that triggers an immediate redirect to the landing page if no valid JWT is present.
+- **Auth Persistence:** Implemented `localStorage` token management to bridge the gap between Login and Dashboard sessions.
+- **Access Control:** Designed the `dashboard.html` shell and implemented an authentication guard in `dashboard.js` that triggers an immediate redirect to the landing page if no valid JWT is present.
+- **Authorization Pattern:** Established the standard `Authorization: Bearer <token>` request header pattern for all future authenticated REST API calls.
 
-    Authorization Pattern: Established the standard Bearer <token> request header pattern for all future authenticated REST API calls.
+### Lessons Learned
+- **Stateless Session Management:** Client-side tokens must be explicitly cleared (`localStorage.removeItem`) on logout to prevent unauthorized access via stale sessions.
+- **Redirect Strategies:** Implementing guard logic on page-load is the first line of defense for frontend route protection.
 
-Lessons Learned
+---
 
-    Stateless Session Management: The importance of clearing client-side tokens (localStorage.removeItem) during logouts to prevent unauthorized access to stale sessions.
+### Log Entry: June 14, 2026 — Full CRUD Lifecycle & API Synchronization
 
-    Redirect Strategies: Implementing guard logic on page-load is the first line of defense for front-end route protection.
+- **Full CRUD Lifecycle:** Successfully integrated `PUT` (toggle completion) and `DELETE` (remove task) endpoints into the dashboard.
+- **Global Scope Handling:** Resolved DOM scope issues by attaching handler functions to the `window` object, ensuring inline HTML button `onclick` attributes can reach JavaScript logic.
+- **Dynamic UI Rendering:** Implemented template literal fetch URLs (e.g. `` `/api/tasks/${id}` ``) for dynamic ID targeting on database mutations.
 
-### Remaining Tasks
+### Milestone 3 Summary
+- **Authentication:** Fully secured with JWT, `authMiddleware`, and client-side page guards.
+- **Task Management:** Complete workflow — Create, View, Toggle Status, Delete.
+- **Frontend/Backend Sync:** Real-time UI updates after every API mutation.
 
+### Completed Tasks
 - [x] Wire Login/Register forms to `POST /api/auth/login` and `POST /api/auth/register`
-- [ ] Store JWT token in `localStorage` and attach to authenticated requests
-- [ ] Build dynamic Task dashboard fed from CRUD REST endpoints
-- [ ] Client-side form validation and user-facing error/status feedback
-- [ ] Handle logout (clear token, redirect to auth screen)
+- [x] Store JWT token in `localStorage` and attach to authenticated requests
+- [x] Build `dashboard.html` shell with auth guard in `dashboard.js`
+- [x] Fetch and render tasks dynamically from CRUD REST endpoints
+- [x] Handle logout (clear token, redirect to auth screen)
+- [x] Integrate PUT (toggle) and DELETE actions with live UI updates
 
 ---
 
 ## 🔲 Milestone 4 — Server Hardening & Observability
-
 **Status:** Pending
 
 ### Planned Tasks
-
 - [ ] Configure global error-handling middleware in Express
 - [ ] Set up environment-aware structured logging (Winston or Morgan)
 - [ ] Evaluate refresh token architecture for robust session management
@@ -175,11 +177,9 @@ Lessons Learned
 ---
 
 ## 🔲 Milestone 5 — Ubuntu Server Deployment
-
 **Status:** Pending
 
 ### Planned Tasks
-
 - [ ] Provision clean production Ubuntu Server instance
 - [ ] Install runtime prerequisites (Node.js, PostgreSQL)
 - [ ] Configure Nginx as reverse proxy + PM2 as process manager
@@ -196,9 +196,11 @@ task-manager-ubuntu/
 ├── public/
 │   ├── css/
 │   │   └── style.css            ✅
-│   └── js/
-│       ├── auth.js              ✅
-│       └── index.html           ✅
+│   ├── js/
+│   │   ├── auth.js              ✅
+│   │   └── dashboard.js         ✅
+│   ├── index.html               ✅
+│   └── dashboard.html           ✅
 ├── server/
 │   ├── config/
 │   │   └── db.js                ✅
@@ -220,4 +222,4 @@ task-manager-ubuntu/
 
 ---
 
-_Last updated: June 10, 2026 — Auth flow complete and verified. Next: Task dashboard HTML._
+*Last updated: June 14, 2026 — Milestone 3 complete. Full-stack app functional end-to-end. Next: Milestone 4 — Server Hardening.*

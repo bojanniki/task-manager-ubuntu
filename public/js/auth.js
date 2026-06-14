@@ -111,14 +111,16 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!response.ok) {
           throw new Error(data.message || "Login failed");
         }
+        localStorage.setItem("token", data.token); //persist the session
+        window.location.href = "/dashboard.html"; //route to the dashboard
 
         showStatus(loginMessage, "Login successful! Redirecting...", "success");
         loginForm.reset();
 
         //saving the token to localStorage
         if (data.token) {
-          localStorage.setItem("token", data.token);
-          window.location.href = "/dashboard.html";
+          localStorage.setItem("token", data.token); //save for later use
+          window.location.href = "/dashboard.html"; //redirect to dashboard
         }
       } catch (error) {
         showStatus(loginMessage, error.message, "error");
