@@ -176,6 +176,10 @@
 - **Environment Isolation:** Configured the error handler to dynamically check `process.env.NODE_ENV`, keeping detailed stack traces hidden in production while keeping them visible during local development.
 - **Payload Safety:** Ensured database schema errors (such as missing relations) fail gracefully with a safe JSON payload and a 500 status code, protecting internal backend implementation details.
 
+### Log Entry: June 14, 2026 — Integrated Structured HTTP Logging
+- **Traffic Visibility:** Implemented `morgan` middleware using the `dev` pre-set format to log all incoming HTTP requests automatically.
+- **Diagnostics:** Enabled live performance and status tracking, exposing request methods, endpoints, response statuses, and precise latency metrics directly in the server stdout stream.
+
 ### Planned Tasks
 - [X] Configure global error-handling middleware in Express
 - [ ] Set up environment-aware structured logging (Winston or Morgan)

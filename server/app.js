@@ -13,6 +13,11 @@ const taskRoutes = require("./routes/tasks");
 
 //Import the error handler
 const errorHandler = require("./middleware/errorHandler");
+const morgan = require("morgan");
+
+//HTTP request logger, dev format for clean, color coded terminal
+
+app.use(morgan("dev"));
 
 //Middleware to parse incoming JSON requests
 app.use(express.json());
