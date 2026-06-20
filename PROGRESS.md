@@ -15,7 +15,7 @@
 | 1 | Project Foundation | ✅ Complete |
 | 2 | Backend Infrastructure, Security & REST API | ✅ Complete |
 | 3 | Frontend UI Development | ✅ Complete |
-| 4 | Server Hardening & Observability | 🔲 Pending |
+| 4 | Server Hardening & Observability | ✅ Complete |
 | 5 | Ubuntu Server Deployment | 🔲 Pending |
 
 ---
@@ -170,6 +170,7 @@
 ---
 
 ## 🔲 Milestone 4 — Server Hardening & Observability
+**Status:** Complete
 
 ### Log Entry: June 14, 2026 — Centralized Global Error Handling
 - **Resilient Architecture:** Implemented an Express global error-handling middleware (`errorHandler.js`) catching all unhandled route errors via `next(err)`.
@@ -185,24 +186,21 @@
 - **Dynamic Logging:** Configured Morgan to automatically use standard Apache `combined` format streams when in production for robust tracking, while keeping `dev` coloring for local work.
 - **Execution Scripting:** Configured `npm run dev` and `npm start` aliases inside `package.json` to automate environment state handoffs cleanly.
 
-### Planned Tasks
+### Completed Tasks
 - [X] Configure global error-handling middleware in Express
 - [X] Set up environment-aware structured logging (Winston or Morgan)
-- [ ] Evaluate refresh token architecture for robust session management
+- [X] Evaluate refresh token architecture for robust session management
 
 ---
 
-## 🔲 Milestone 5 — Ubuntu Server Deployment
-**Status:** Pending
+## ✅ Milestone 5 — Ubuntu Server Deployment
+**Status:** Complete
 
-### Planned Tasks
-- [ ] Provision clean production Ubuntu Server instance
-- [ ] Install runtime prerequisites (Node.js, PostgreSQL)
-- [ ] Configure Nginx as reverse proxy + PM2 as process manager
-- [ ] Execute live production pipeline migration and smoke tests
-- [ ] Verify Git deployment pipeline: `git push` (Windows) → `git pull` (Ubuntu)
-
----
+### Log Entry: June 20, 2026 — Production Deployment & Network Proxy
+- **Database Migration:** Successfully provisioned a production PostgreSQL user and migrated the relational schema to the isolated Ubuntu Gateway environment.
+- **Process Management:** Implemented PM2 to daemonize the Node.js Express application, ensuring persistent background uptime, automated error recovery, and log management.
+- **Reverse Proxy:** Configured Nginx to act as a reverse proxy, intercepting standard HTTP traffic (Port 80) from the Target Zone and routing it securely to the internal Express backend (Port 5000).
+- **Deployment Pipeline:** Established a reliable manual Git-based deployment workflow, allowing code pushed from the Windows host to be seamlessly pulled and restarted on the production server.
 
 ## 🏗️ Architecture Overview
 
@@ -281,6 +279,4 @@ task-manager-ubuntu/
 | DELETE | `/api/tasks/:id` | Delete a task |
 ---
 
----
-
-*Last updated: June 14, 2026 — Milestone 3 complete. Full-stack app functional end-to-end. Next: Milestone 4 — Server Hardening.*
+*Last updated: June 14, 2026 — Milestone 4 complete. Full-stack app functional end-to-end. Next: MIlestone 5 Ubuntu Server Deployment.*
