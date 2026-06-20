@@ -279,4 +279,4 @@ task-manager-ubuntu/
 | DELETE | `/api/tasks/:id` | Delete a task |
 ---
 
-*Last updated: June 14, 2026 — Milestone 4 complete. Full-stack app functional end-to-end. Next: MIlestone 5 Ubuntu Server Deployment.*
+*Last updated: June 20, 2026 — Milestone 5 complete. 
